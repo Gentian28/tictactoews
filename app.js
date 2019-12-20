@@ -36,6 +36,12 @@ io.sockets.on('connection', (socket) => {
 
         io.sockets.emit('move made', { index: index });
     });
+
+    socket.on('reset', () => {
+        console.log('game reseted');
+
+        io.sockets.emit('reset');
+    });
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));
