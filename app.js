@@ -12,6 +12,10 @@ const io = socketIo(server);
 
 const connections = [];
 
+app.get('/', (req, res, next) => {
+    res.send('Tic-Tac-Toe Webservice');
+})
+
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
     console.log(' %s sockets is connected', connections.length);
