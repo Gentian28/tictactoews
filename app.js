@@ -18,10 +18,14 @@ app.get('/', (req, res, next) => {
 
 io.sockets.on('connection', (socket) => {
     connections.push(socket);
+
+    io.sockets.emit('connected players', connections.length);
+
     console.log(' %s sockets is connected', connections.length);
 
     socket.on('disconnect', () => {
         connections.splice(connections.indexOf(socket), 1);
+        io.sockets.emit('player disconnected', connections.length);
         console.log(' %s sockets is connected', connections.length);
     });
 
