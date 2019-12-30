@@ -63,14 +63,17 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('join room', roomData => {
-        const room = games.map(room => room.gameId).indexOf(roomData.gameId);
-        if (games[room].players.length < 2) {
-            games[room].players.push({ playerSocketId: socket.id, playerId: roomData.playerId });
-            io.sockets.emit('room joined', games[room]);
+        const roomIndex = games.map(room => room.gameId).indexOf(roomData.gameId);
+        if (games[roomIndex].players.length < 2) {
+            games[roomIndex].players.push(roomData.playerId);
+            // games[roomIndex].players.push({ playerSocketId: socket.id, playerId: roomData.playerId });
+            io.sockets.emit('room joined', games[roomIndex]);
             // console.log(games);
         } else {
             console.log('error')
         }
+        console.log(games);
+
         // console.log(room);
     })
 
@@ -79,6 +82,7 @@ io.sockets.on('connection', (socket) => {
         const room = games.map(room => room.gameId).indexOf(data.gameId);
         // games[room].players.splice(games[room].players.indexOf(data.playerId), 1);
         games[room].players.length = 0;
+        console.log(games);
         io.sockets.emit('room exited', games[room]);
     })
 });
