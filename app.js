@@ -31,6 +31,8 @@ io.sockets.on('connection', (socket) => {
         console.log(socket.id)
         const index = games.map(e => e.socketId).indexOf(socket.id);
         if (index > -1) {
+            games[index].players.length = 0;
+            io.sockets.emit('room exited', games[index]);
             games.splice(games.indexOf(index), 1);
         }
         connections.splice(connections.indexOf(socket), 1);
